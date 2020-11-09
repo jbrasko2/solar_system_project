@@ -1,6 +1,6 @@
 source "https://rubygems.org"
+gem 'pry'
+gem 'httparty'
+gem 'json'
 
-# Specify your gem's dependencies in solar_system.gemspec
-gemspec
-
-gem "rake", "~> 12.0"
+git_source(:github) {|repo_name| "https://github.com/jbrasko2/solar_system_project" }
