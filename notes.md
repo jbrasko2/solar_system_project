@@ -9,3 +9,8 @@ Classes
 - CLI
 - API
 - Planet
+
+What is a planet?
+
+- A planet has a name
+- 

@@ -1,30 +1,21 @@
 class SolarSystem::CLI
 
+    @@planets = ["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune", "Pluto"]
+
     def call
         puts "Welcome to the Solar System!"
-        list_planets
+        display_planets
         menu
         goodbye
     end
 
-    def list_planets
-        puts "1. Mercury"
-        puts "2. Venus"
-        puts "3. Earth"
-        puts "4. Mars"
-        puts "5. Jupiter"
-        puts "6. Saturn"
-        puts "7. Uranus"
-        puts "8. Neptune"
-        puts "9. Pluto"
-    end
-
     def menu
-        puts "Which planet would you like to explore?"
-        puts "Enter (1-9) or type 'exit' to quit."
         input = nil
         while input != "exit"
-            input = gets.strip
+            puts "Which planet would you like to explore?"
+            puts "Enter (1-9) for a planet, 'list' to list planets, or 'exit' to quit."
+            
+            input = gets.strip.downcase
             case input
             when "1"
                 puts "More info on Mercury..."
@@ -44,11 +35,23 @@ class SolarSystem::CLI
                 puts "More info on Neptune..."
             when "9"
                 puts "More info on Pluto..."
+            when "list"
+                display_planets
+            else
+                puts "BEEP-BOOP. Does not compute...Please enter (1-9), 'list' or 'exit'."
             end
         end
     end
 
     def goodbye
-        "Taking you home..."
+        puts "Taking you home..."
+    end
+
+    def  self.planets
+        @@planets
+    end
+
+    def display_planets
+        SolarSystem::CLI.planets.each_with_index {|planet, index| puts "#{index + 1}. #{planet}"}
     end
 end
