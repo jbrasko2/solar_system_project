@@ -11,7 +11,7 @@ class SolarSystem::CLI
 
     def menu
         input = nil
-        while input != "exit"
+        loop do
             puts "Which planet would you like to explore?"
             puts "Enter (1-9) for a planet, 'list' to list planets, or 'exit' to quit."
             
@@ -37,6 +37,8 @@ class SolarSystem::CLI
                 puts "More info on Pluto..."
             when "list"
                 display_planets
+            when "exit"
+                break
             else
                 puts "BEEP-BOOP. Does not compute...Please enter (1-9), 'list' or 'exit'."
             end
