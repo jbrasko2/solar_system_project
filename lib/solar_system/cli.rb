@@ -4,9 +4,13 @@ class SolarSystem::CLI
     @@planets = ["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"]
 
     def call
-        puts "Hello Space Cadet! Welcome to the Solar System!"
-        puts "To explore planets, enter 'planets'."
-        puts "To leave the solar system, enter 'exit'."
+        puts ""
+        puts "* ` * ` * ` * ` * ` * ` * ` * ` * ` * ` * ` * ` *".light_magenta
+        puts "Greetings, Space Cadet! Welcome to the Solar System!".cyan
+        puts ""
+        puts "* ` * ` * ` * ` * ` * ` * ` * ` * ` * ` * ` * ` *".light_magenta
+        puts "To explore planets, enter" + " 'planets'.".light_green
+        puts "To return to your home planet, enter "+ "'abort'.".red
         menu
     end
 
@@ -15,7 +19,7 @@ class SolarSystem::CLI
 
        if input == "planets"
         display_planets
-       elsif input == "exit"
+       elsif input == "abort"
         goodbye
        else
         invalid_input
@@ -28,9 +32,10 @@ class SolarSystem::CLI
     end
 
     def display_planets
-        SolarSystem::CLI.planets.each_with_index {|planet, index| puts "#{index + 1}. #{planet}"}
+        puts ""
+        SolarSystem::CLI.planets.each_with_index {|planet, index| puts "#{index + 1}. #{planet}".cyan}
         
-        puts "Which planet would you like to explore? (1-8)"
+        puts "Which planet would you like to explore?" + " (1-8)".light_green
         input = gets.strip
         if input.to_i.between?(1,8)
             select_planet(input)
@@ -41,11 +46,29 @@ class SolarSystem::CLI
     end
 
     def select_planet(input)
-        puts "Taking you to #{self.class.planets[input_to_index(input)]}!"
+        puts ""
+        puts "Setting coordinates to" +" #{self.class.planets[input_to_index(input)]}".cyan + "..."
+        sleep 2
+        puts "    ^"
+        puts "   /" + " \\"
+        puts "   |" + "U".cyan + "|"
+        puts "   |" + "S".cyan + "|"
+        puts "   |" + "A".cyan + "|"
+        puts "  /"+ "___"+"\\"
+        sleep 0.75
+        puts "   VVV".red
+        sleep 0.75
+        puts "   VVV".red
+        sleep 0.75
+        puts "   VVV".red
         index = self.input_to_index(input)
         query = self.class.planets[index]
         api = SolarSystem::API.new(query)
         api.create_planet
+        planet = SolarSystem::Planet.all[0]
+        puts ""
+        puts "You've arrived at " + "#{planet.englishName}".cyan + "!"
+        sleep 2
         display_attributes
     end
 
@@ -58,11 +81,13 @@ class SolarSystem::CLI
     end
 
     def invalid_input
-        puts "BEEP-BOOP. Invalid entry... Please enter 'planets' or 'exit'."
+        puts ""
+        puts "BEEP-BOOP. ".red + "Invalid entry... Please enter " + "'planets' ".light_green + "or " + "'abort'".red + "."
     end
 
     def invalid_input_2
-        puts "BEEP-BOOP. Invalid entry... Please enter a number (1-8)."
+        puts ""
+        puts "BEEP-BOOP. ".red + "Invalid entry... Please enter a number" + " (1-8).".light_green
     end
     
     def size_calc(x)
@@ -77,40 +102,55 @@ class SolarSystem::CLI
         x/7917.5
     end
 
+    def scan
+        puts ""
+        puts "Scanning...".red
+        sleep 3
+    end
         
     def display_attributes
+        planet = SolarSystem::Planet.all[0]
         puts ""
         puts "What would you like to know?"
-        puts "1. Size"
-        puts "2. Gravitational Pull"
-        puts "3. Day Length"
-        puts "4. Year Length"
+        sleep 0.5
+        puts "1. " + "Size".light_magenta
+        sleep 0.5
+        puts "2. " + "Gravitational Pull".cyan
+        sleep 0.5
+        puts "3. " + "Day Length".light_green
+        sleep 0.5
+        puts "4. " + "Year Length".yellow
 
-        planet = SolarSystem::Planet.all[0]
+
 
         input = gets.chomp
         case input
         when "1"
+            scan
             puts ""
-            puts "#{planet.englishName} is approximately #{size_calc(planet.meanRadius).round} miles wide."
-            puts "That's roughly #{size_to_earth(size_calc(planet.meanRadius)).round(2)}x the size of Earth!"
+            puts "#{planet.englishName}".cyan + " is approximately " + "#{size_calc(planet.meanRadius).round}".light_green + " miles wide."
+            puts "That's roughly " + "#{size_to_earth(size_calc(planet.meanRadius)).round(2)}x".light_green + " the size of Earth!"
             more_info(planet.englishName)
         when "2"
+            scan
             puts ""
-            puts "The gravitational pull of #{planet.englishName} is approximately #{planet.gravity.round(2)} m/s^2."
-            puts "That is #{gravity_calc(planet.gravity).round}% of Earth's gravity!"
+            puts "The gravitational pull of " + "#{planet.englishName}".cyan + " is approximately " + "#{planet.gravity.round(2)} m/s^2".light_green + "."
+            puts "That is " + "#{gravity_calc(planet.gravity).round}%".light_green + " of Earth's gravity!"
             more_info(planet.englishName)
         when "3"
+            scan
             puts ""
-            puts "One day on #{planet.englishName} is equal to roughly #{planet.sideralRotation.round(half: :up).abs} Earth hours!"
+            puts "One day on " + "#{planet.englishName}".cyan + " is equal to roughly " + "#{planet.sideralRotation.round(half: :up).abs}".light_green + " Earth hours!"
             more_info(planet.englishName)
         when "4"
+            scan
             puts ""
-            puts "#{planet.englishName} takes #{planet.sideralOrbit.to_i.round(2)} Earth days to revolve around the sun!"
+            puts "#{planet.englishName}".cyan + " takes " + "#{planet.sideralOrbit.to_i.round(2)}".light_green + " Earth days to revolve around the sun!"
             more_info(planet.englishName)
         else
+            scan
             puts ""
-            puts "BEEP-BOOP. Invalid entry... Please enter a number (1-4)."
+            puts "BEEP-BOOP. ".cyan + "Invalid entry... Please enter a number" + " (1-4)".light_green + "."
             display_attributes
         end
     end
@@ -118,19 +158,23 @@ class SolarSystem::CLI
     def more_info(planet)
         puts ""
         puts ""
-        puts "Type 'more' to learn more about #{planet}."
-        puts "Type 'planets' to warp to a new planet."
-        puts "Or type 'exit' to quit."
+        sleep 3
+        puts "Type " + "'more'".cyan + " to learn more about #{planet}."
+        sleep 0.5
+        puts "Type " + "'planets'".light_green + " to select a new planet."
+        sleep 0.5
+        puts "Type " + "'abort'".red + " to quit."
         input = gets.strip.downcase
         if input == "more"
             display_attributes
         elsif input == "planets"
             SolarSystem::Planet.destroy_all
             display_planets
-        elsif input == "exit"
+        elsif input == "abort"
             goodbye
         else
-            puts "BEEP-BOOP. Invalid entry... Please enter a number 'more', 'planets' or 'exit'."
+            puts ""
+            puts "BEEP-BOOP. ".red + "Invalid entry... Please enter a number " + "'more'".cyan + ", "+ "'planets'".light_green + " or " + "'abort'".red + "."
             more_info(planet)
         end
     end
