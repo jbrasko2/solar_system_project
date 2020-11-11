@@ -32,12 +32,13 @@ class SolarSystem::Planet
         puts "4. Orbit"
 
         planet = self.all
-        binding.pry
 
         input = gets.chomp
         case input
         when "1"
-            puts "The radius of #{planet.englishName} is approximately #{planet.meanRadius} km wide!"
+            planet.each do |x|
+            puts "The radius of #{x.englishName} is approximately #{x.meanRadius} km wide!"
+            end
         when "2"
             puts "The gravitational pull of #{planet.englishName} is approximately #{planet.gravity} ms^2"
             puts "That is #{planet.gravity.to_i/9.807*100}% of Earth's gravity!"
