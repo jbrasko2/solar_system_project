@@ -1,8 +1,8 @@
-require 'pry'
 class SolarSystem::CLI
 
     @@planets = ["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"]
 
+    # diplay and command methods
     def call
         puts ""
         puts "* ` * ` * ` * ` * ` * ` * ` * ` * ` * ` * ` * ` *".light_magenta
@@ -27,13 +27,9 @@ class SolarSystem::CLI
        end
     end
 
-    def input_to_index(input)
-        input.to_i - 1
-    end
-
     def display_planets
         puts ""
-        SolarSystem::CLI.planets.each_with_index {|planet, index| puts "#{index + 1}. #{planet}".cyan}
+        self.class.planets.each_with_index {|planet, index| puts "#{index + 1}. #{planet}".cyan}
         
         puts "Which planet would you like to explore?" + " (1-8)".light_green
         input = gets.strip
@@ -72,42 +68,6 @@ class SolarSystem::CLI
         sleep 2
         display_attributes
     end
-
-    def goodbye
-        puts "Taking you home..."
-    end
-
-    def  self.planets
-        @@planets
-    end
-
-    def invalid_input
-        puts ""
-        puts "BEEP-BOOP. ".red + "Invalid entry... Please enter " + "'planets' ".light_green + "or " + "'abort'".red + "."
-    end
-
-    def invalid_input_2
-        puts ""
-        puts "BEEP-BOOP. ".red + "Invalid entry... Please enter a number" + " (1-8).".light_green
-    end
-    
-    def size_calc(x)
-        (x*2)*0.621371
-    end
-
-    def gravity_calc(x)
-        (x/9.807)*100
-    end
-
-    def size_to_earth(x)
-        x/7917.5
-    end
-
-    def scan
-        puts ""
-        puts "Scanning...".red
-        sleep 3
-    end
         
     def display_attributes
         planet = SolarSystem::Planet.all[0]
@@ -125,9 +85,8 @@ class SolarSystem::CLI
         puts ""
         puts "Please enter " + "(1-4)".light_green
 
-
-
         input = gets.chomp
+
         case input
         when "1"
             scan
@@ -178,8 +137,52 @@ class SolarSystem::CLI
             goodbye
         else
             puts ""
-            puts "BEEP-BOOP. ".red + "Invalid entry... Please enter a number " + "'more'".cyan + ", "+ "'planets'".light_green + " or " + "'abort'".red + "."
+            puts "BEEP-BOOP. ".red + "Invalid entry... Please enter " + "'more'".cyan + ", "+ "'planets'".light_green + " or " + "'abort'".red + "."
             more_info(planet)
         end
     end
+
+    def goodbye
+        puts "Taking you home..."
+    end
+
+    # storage
+    def  self.planets
+        @@planets
+    end
+
+    # calculations
+    def input_to_index(input)
+        input.to_i - 1
+    end
+    
+    def size_calc(x)
+        (x*2)*0.621371
+    end
+
+    def gravity_calc(x)
+        (x/9.807)*100
+    end
+
+    def size_to_earth(x)
+        x/7917.5
+    end
+
+    def scan
+        puts ""
+        puts "Scanning...".red
+        sleep 3
+    end
+
+    # conditions
+    def invalid_input
+        puts ""
+        puts "BEEP-BOOP. ".red + "Invalid entry... Please enter " + "'planets' ".light_green + "or " + "'abort'".red + "."
+    end
+
+    def invalid_input_2
+        puts ""
+        puts "BEEP-BOOP. ".red + "Invalid entry... Please enter a number" + " (1-8).".light_green
+    end
+    
 end

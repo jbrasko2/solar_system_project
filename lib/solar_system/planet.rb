@@ -23,9 +23,5 @@ class SolarSystem::Planet
     def self.destroy_all
         @@all.clear
     end
-
     
-
-
-
 end
