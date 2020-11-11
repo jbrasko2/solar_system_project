@@ -61,6 +61,7 @@ class SolarSystem::CLI
         puts "   VVV".red
         sleep 0.75
         puts "   VVV".red
+        sleep 0.75
         index = self.input_to_index(input)
         query = self.class.planets[index]
         api = SolarSystem::API.new(query)
@@ -120,6 +121,9 @@ class SolarSystem::CLI
         puts "3. " + "Day Length".light_green
         sleep 0.5
         puts "4. " + "Year Length".yellow
+        sleep 0.5
+        puts ""
+        puts "Please enter " + "(1-4)".light_green
 
 
 
@@ -145,12 +149,12 @@ class SolarSystem::CLI
         when "4"
             scan
             puts ""
-            puts "#{planet.englishName}".cyan + " takes " + "#{planet.sideralOrbit.to_i.round(2)}".light_green + " Earth days to revolve around the sun!"
+            puts "#{planet.englishName}".cyan + " takes " + "#{planet.sideralOrbit.to_i.round(2)}".light_green + " Earth days to revolve around the " + "sun".yellow + "!"
             more_info(planet.englishName)
         else
             scan
             puts ""
-            puts "BEEP-BOOP. ".cyan + "Invalid entry... Please enter a number" + " (1-4)".light_green + "."
+            puts "BEEP-BOOP. ".red + "Invalid entry... Please enter a number" + " (1-4)".light_green + "."
             display_attributes
         end
     end
