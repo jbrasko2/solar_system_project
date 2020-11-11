@@ -6,9 +6,9 @@
 - Display attribute content
 
 Classes
-- CLI
-- API
-- Planet
+- CLI - controller - communicates with user
+- API - bring in external data, instatiate objects
+- Planet - where objects are created and stored
 
 What is a planet?
 
