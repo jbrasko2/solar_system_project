@@ -45,21 +45,8 @@ class SolarSystem::CLI
         puts ""
         puts "Setting coordinates to" +" #{self.class.planets[input_to_index(input)]}".cyan + "..."
         sleep 2
-        puts "    ^"
-        puts "   /" + " \\"
-        puts "   |" + "U".cyan + "|"
-        puts "   |" + "S".cyan + "|"
-        puts "   |" + "A".cyan + "|"
-        puts "  /"+ "___"+"\\"
-        sleep 0.75
-        puts "   VVV".red
-        sleep 0.75
-        puts "   VVV".red
-        sleep 0.75
-        puts "   VVV".red
-        sleep 0.75
-        index = self.input_to_index(input)
-        query = self.class.planets[index]
+        rocket
+        query = self.class.planets[input.to_i - 1]
         api = SolarSystem::API.new(query)
         api.create_planet
         planet = SolarSystem::Planet.all[0]
@@ -140,6 +127,22 @@ class SolarSystem::CLI
             puts "BEEP-BOOP. ".red + "Invalid entry... Please enter " + "'more'".cyan + ", "+ "'planets'".light_green + " or " + "'abort'".red + "."
             more_info(planet)
         end
+    end
+
+    def rocket
+        puts "    ^"
+        puts "   /" + " \\"
+        puts "   |" + "U".cyan + "|"
+        puts "   |" + "S".cyan + "|"
+        puts "   |" + "A".cyan + "|"
+        puts "  /"+ "___"+"\\"
+        sleep 1.5
+        puts "   VVV".red
+        sleep 0.75
+        puts "   VVV".red
+        sleep 0.75
+        puts "   VVV".red
+        sleep 0.75
     end
 
     def goodbye
