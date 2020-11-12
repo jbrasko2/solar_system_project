@@ -5,7 +5,13 @@ class SolarSystem::API
         @query = query
     end
 
-    def get_planet
+    def create_planet        
+        planet = get_attributes
+        SolarSystem::Planet.new(planet["englishName"], planet["meanRadius"], planet["gravity"],
+        planet["sideralRotation"], planet["sideralOrbit"])
+    end
+
+    def get_attributes
         case query
         when "Mercury"
             url = "https://api.le-systeme-solaire.net/rest/bodies/mercure"
@@ -24,10 +30,5 @@ class SolarSystem::API
         response = Net::HTTP.get(uri)
         planet = JSON.parse(response)
     end
-
-    def create_planet        
-        planet = get_planet
-        SolarSystem::Planet.new(planet["englishName"], planet["meanRadius"], planet["gravity"],
-        planet["sideralRotation"], planet["sideralOrbit"])
-    end
+    
 end

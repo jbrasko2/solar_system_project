@@ -18,7 +18,7 @@ class SolarSystem::CLI
        input = gets.strip.downcase
 
        if input == "planets"
-        display_planets
+        select_planet
        elsif input == "abort"
         goodbye
        else
@@ -27,23 +27,23 @@ class SolarSystem::CLI
        end
     end
 
-    def display_planets
+    def select_planet
         puts ""
         self.class.planets.each_with_index {|planet, index| puts "#{index + 1}. #{planet}".cyan}
         
         puts "Which planet would you like to explore?" + " (1-8)".light_green
         input = gets.strip
         if input.to_i.between?(1,8)
-            select_planet(input)
+            send_planet(input)
         else
             invalid_input_2
-            self.display_planets
+            select_planet
         end
     end
 
-    def select_planet(input)
+    def send_planet(input)
         puts ""
-        puts "Setting coordinates to" +" #{self.class.planets[input_to_index(input)]}".cyan + "..."
+        puts "Setting coordinates to" +" #{self.class.planets[input.to_i - 1]}".cyan + "..."
         sleep 2
         rocket
         query = self.class.planets[input.to_i - 1]
@@ -53,10 +53,10 @@ class SolarSystem::CLI
         puts ""
         puts "You've arrived at " + "#{planet.englishName}".cyan + "!"
         sleep 2
-        display_attributes
+        select_attribute
     end
         
-    def display_attributes
+    def select_attribute
         planet = SolarSystem::Planet.all[0]
         puts ""
         puts "What would you like to know?"
@@ -72,7 +72,7 @@ class SolarSystem::CLI
         puts ""
         puts "Please enter " + "(1-4)".light_green
 
-        input = gets.chomp
+        input = gets.strip
 
         case input
         when "1"
@@ -98,10 +98,8 @@ class SolarSystem::CLI
             puts "#{planet.englishName}".cyan + " takes " + "#{planet.sideralOrbit.to_i.round(2)}".light_green + " Earth days to revolve around the " + "sun".yellow + "!"
             more_info(planet.englishName)
         else
-            scan
-            puts ""
-            puts "BEEP-BOOP. ".red + "Invalid entry... Please enter a number" + " (1-4)".light_green + "."
-            display_attributes
+            invalid_input_3
+            select_attribute
         end
     end
 
@@ -116,10 +114,10 @@ class SolarSystem::CLI
         puts "Type " + "'abort'".red + " to quit."
         input = gets.strip.downcase
         if input == "more"
-            display_attributes
+            select_attribute
         elsif input == "planets"
             SolarSystem::Planet.destroy_all
-            display_planets
+            select_planet
         elsif input == "abort"
             goodbye
         else
@@ -187,5 +185,10 @@ class SolarSystem::CLI
         puts ""
         puts "BEEP-BOOP. ".red + "Invalid entry... Please enter a number" + " (1-8).".light_green
     end
-    
+
+    def invalid_input_3
+        puts ""
+        puts "BEEP-BOOP. ".red + "Invalid entry... Please enter a number" + " (1-4)".light_green + "."
+    end
+
 end
