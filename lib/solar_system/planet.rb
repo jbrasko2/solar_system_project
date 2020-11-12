@@ -1,14 +1,14 @@
 class SolarSystem::Planet
-    attr_accessor :englishName, :meanRadius, :gravity, :sideralRotation, :sideralOrbit
+    attr_accessor :name, :radius, :gravity, :rotation, :orbit
 
     @@all = []
 
-    def initialize(englishName, meanRadius, gravity, sideralRotation, sideralOrbit)
-        @englishName = englishName
-        @meanRadius = meanRadius
+    def initialize(name, radius, gravity, rotation, orbit)
+        @name = name
+        @radius = radius
         @gravity = gravity
-        @sideralRotation = sideralRotation
-        @sideralOrbit = sideralOrbit
+        @rotation = rotation
+        @orbit = orbit
         save
     end
 

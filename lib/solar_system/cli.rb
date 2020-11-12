@@ -51,7 +51,7 @@ class SolarSystem::CLI
         api.create_planet
         planet = SolarSystem::Planet.all[0]
         puts ""
-        puts "You've arrived at " + "#{planet.englishName}".cyan + "!"
+        puts "You've arrived at " + "#{planet.name}".cyan + "!"
         sleep 2
         select_attribute
     end
@@ -78,25 +78,25 @@ class SolarSystem::CLI
         when "1"
             scan
             puts ""
-            puts "#{planet.englishName}".cyan + " is approximately " + "#{size_calc(planet.meanRadius).round}".light_green + " miles wide."
-            puts "That's roughly " + "#{size_to_earth(size_calc(planet.meanRadius)).round(2)}x".light_green + " the size of Earth!"
-            more_info(planet.englishName)
+            puts "#{planet.name}".cyan + " is approximately " + "#{size_calc(planet.radius).round}".light_green + " miles wide."
+            puts "That's roughly " + "#{size_to_earth(size_calc(planet.radius)).round(2)}x".light_green + " the size of Earth!"
+            more_info(planet.name)
         when "2"
             scan
             puts ""
-            puts "The gravitational pull of " + "#{planet.englishName}".cyan + " is approximately " + "#{planet.gravity.round(2)} m/s^2".light_green + "."
+            puts "The gravitational pull of " + "#{planet.name}".cyan + " is approximately " + "#{planet.gravity.round(2)} m/s^2".light_green + "."
             puts "That is " + "#{gravity_calc(planet.gravity).round}%".light_green + " of Earth's gravity!"
-            more_info(planet.englishName)
+            more_info(planet.name)
         when "3"
             scan
             puts ""
-            puts "One day on " + "#{planet.englishName}".cyan + " is equal to roughly " + "#{planet.sideralRotation.round(half: :up).abs}".light_green + " Earth hours!"
-            more_info(planet.englishName)
+            puts "One day on " + "#{planet.name}".cyan + " is equal to roughly " + "#{planet.rotation.round(half: :up).abs}".light_green + " Earth hours!"
+            more_info(planet.name)
         when "4"
             scan
             puts ""
-            puts "#{planet.englishName}".cyan + " takes " + "#{planet.sideralOrbit.to_i.round(2)}".light_green + " Earth days to revolve around the " + "sun".yellow + "!"
-            more_info(planet.englishName)
+            puts "#{planet.name}".cyan + " takes " + "#{planet.orbit.to_i.round(2)}".light_green + " Earth days to revolve around the " + "sun".yellow + "!"
+            more_info(planet.name)
         else
             invalid_input_3
             select_attribute
