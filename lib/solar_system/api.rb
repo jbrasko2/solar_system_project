@@ -22,6 +22,10 @@ class SolarSystem::API
         else 
             url = "https://api.le-systeme-solaire.net/rest/bodies/#{query}"
         end
+        # uri = URI(url)
+        # response = Net::HTTP.get(uri)
+        # JSON.parse(response)
+
         response = HTTParty.get(url)
         response.parsed_response
     end
