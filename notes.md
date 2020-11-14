@@ -10,7 +10,3 @@ Classes
 - API - bring in external data, instatiate objects
 - Planet - where objects are created and stored
 
-What is a planet?
-
-- A planet has a name
-- 

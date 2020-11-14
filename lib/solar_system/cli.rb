@@ -4,14 +4,7 @@ class SolarSystem::CLI
 
     # diplay and command methods
     def call
-        puts ""
-        puts "* ` * ` * ` * ` * ` * ` * ` * ` * ` * ` * ` * ` *".light_magenta
-        puts "Greetings, Space Cadet! Welcome to the " + "S".cyan + "o".green + "l".yellow + "a".red + "r ".light_magenta + "S".cyan + 
-        "y".green + "s".yellow + "t".red + "e".light_magenta + "m".cyan + "!"
-        puts ""
-        puts "* ` * ` * ` * ` * ` * ` * ` * ` * ` * ` * ` * ` *".light_magenta
-        puts "To explore planets, enter" + " 'planets'.".light_green
-        puts "To return to your home planet, enter "+ "'abort'.".red
+        greeting
         menu
     end
 
@@ -131,6 +124,24 @@ class SolarSystem::CLI
     end
 
     #animation
+    def greeting
+        puts ""
+        puts "* ` * ` * ` * ` * ` * ` * ` * ` * ` * ` * ` * ` *".light_magenta
+        puts "Greetings, Space Cadet! Welcome to the " + "S".cyan + "o".green + "l".yellow + "a".red + "r ".light_magenta + "S".cyan + 
+        "y".green + "s".yellow + "t".red + "e".light_magenta + "m".cyan + "!"
+        puts ""
+        puts "* ` * ` * ` * ` * ` * ` * ` * ` * ` * ` * ` * ` *".light_magenta
+        puts "To explore planets, enter" + " 'planets'.".light_green
+        puts "To return to your home planet, enter "+ "'abort'.".red
+    end
+
+    def scan
+        puts ""
+        puts "Scanning...".red
+        sleep 3
+        puts ""
+    end
+
     def rocket
         puts "    ^"
         puts "   /" + " \\"
@@ -167,13 +178,6 @@ class SolarSystem::CLI
 
     def size_to_earth(x)
         x/7917.5
-    end
-
-    def scan
-        puts ""
-        puts "Scanning...".red
-        sleep 3
-        puts ""
     end
 
     # conditions
