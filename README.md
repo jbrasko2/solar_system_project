@@ -5,8 +5,7 @@ Welcome to the Solar System CLI application! The application will allow users to
 ## Installation
 
 The following gems are required to successfully run this CLI and can be found in the lib/environment folder: HTTParty, JSON, Pry, Colorize.
-To install, run:
-bundle install
+To install, enter 'bundle install' into the terminal
 
 ## Usage
 
