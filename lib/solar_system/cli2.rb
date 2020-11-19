@@ -9,8 +9,6 @@ class SolarSystem::CLI
     end
 
     def menu
-        puts "To explore planets, enter" + " 'planets'.".light_green
-        puts "To return to your home planet, enter "+ "'abort'.".red
        input = gets.strip.downcase
        case input
        when "planets"
@@ -40,30 +38,22 @@ class SolarSystem::CLI
     end
 
     def send_planet(input)
-        query = self.class.planets[input.to_i - 1]
         puts ""
-        puts "Setting coordinates to" +" #{query}".cyan + "..."
+        puts "Setting coordinates to" +" #{self.class.planets[input.to_i - 1]}".cyan + "..."
         sleep 2
         rocket
-        planet = SolarSystem::Planet.all.find {|planet|planet.name == query}
-        if planet
-        puts ""
-        puts "You've arrived at " + "#{planet.name}".cyan + "!"
-        sleep 2
-        select_attribute(planet)
-
-        else
+        query = self.class.planets[input.to_i - 1]
         api = SolarSystem::API.new(query)
-        api.create_planet
-        planet = SolarSystem::Planet.all.find {|planet|planet.name == query}
+        api.create_planet(query)
+        planet = SolarSystem::Planet.all[0]
         puts ""
         puts "You've arrived at " + "#{planet.name}".cyan + "!"
         sleep 2
-        select_attribute(planet)
-        end
+        select_attribute
     end
         
-    def select_attribute(planet)
+    def select_attribute
+        planet = SolarSystem::Planet.all[0]
         puts ""
         puts "What would you like to know?"
         sleep 0.5
@@ -77,6 +67,7 @@ class SolarSystem::CLI
         sleep 0.5
         puts ""
         puts "Please enter " + "(1-4) ".light_green + "or " + "'abort' ".red + "to quit."
+
 
         input = gets.strip.downcase
 
@@ -121,7 +112,7 @@ class SolarSystem::CLI
         when "more"
             select_attribute
         when "planets"
-            # SolarSystem::Planet.destroy_all
+            SolarSystem::Planet.destroy_all
             select_planet
         when "abort"
             goodbye
@@ -139,7 +130,9 @@ class SolarSystem::CLI
         puts "Greetings, Space Cadet! Welcome to the " + "S".cyan + "o".green + "l".yellow + "a".red + "r ".light_magenta + "S".cyan + 
         "y".green + "s".yellow + "t".red + "e".light_magenta + "m".cyan + "!"
         puts ""
-        puts "* ` * ` * ` * ` * ` * ` * ` * ` * ` * ` * ` * ` *".light_magenta   
+        puts "* ` * ` * ` * ` * ` * ` * ` * ` * ` * ` * ` * ` *".light_magenta
+        puts "To explore planets, enter" + " 'planets'.".light_green
+        puts "To return to your home planet, enter "+ "'abort'.".red
     end
 
     def scan
@@ -187,7 +180,7 @@ class SolarSystem::CLI
         x/7917.5
     end
 
-    # conditions
+    # invalids
     def invalid_input
         puts ""
         puts "BEEP-BOOP. ".red + "Invalid entry... Please enter " + "'planets' ".light_green + "or " + "'abort'".red + "."
